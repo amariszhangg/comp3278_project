@@ -29,3 +29,4 @@ Material(course_code, group_id, material_id, material_name, link)
 TeacherMessage(course_code, message_id, post_time, message)
     Primary Key: message_id, course_code
     Foreign Key: course_code referencing Course(course_code)
+
