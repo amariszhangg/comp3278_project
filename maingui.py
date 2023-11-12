@@ -2,9 +2,15 @@
 # enter your own passwd and database
 # this current code is for selecting all the relevant info to be used in displaying the timetable/class within next hour
 import mysql.connector
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
-conn = mysql.connector.connect(host="localhost", user="root", passwd="  ", database="  ")
+conn = mysql.connector.connect(host="localhost",
+            user=os.environ["MYSQL_USER"],
+            passwd=os.environ["MYSQL_PASSWORD"],
+            database=os.environ["MYSQL_DATABASE"])
 cursor = conn.cursor()
 cursor.execute("SELECT student_id, name, login_time FROM Student WHERE student_id='2'")
 student_info = cursor.fetchall()

@@ -8,7 +8,10 @@ import pyttsx3
 import pickle
 from datetime import datetime
 import sys
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # when student ID does not exist
 def invalid_id():
@@ -25,10 +28,13 @@ def insert():
     if user_id == "":
         MessageBox.showinfo("Insert Status", "All fields are required")
     else:
-        conn = mysql.connector.connect(user='root', password='  ', database='   ',
-                                      auth_plugin='mysql_native_password')
+        conn = mysql.connector.connect(
+            user=os.environ["MYSQL_USER"],
+            passwd=os.environ["MYSQL_PASSWORD"],
+            database=os.environ["MYSQL_DATABASE"],
+            auth_plugin='mysql_native_password')
         cursor = conn.cursor()
-        cursor.execute("use comp")
+        cursor.execute("use facerecognition")
         cursor.execute("select * from Student where student_id=%s", (user_id,))
         result = cursor.fetchone()
 
@@ -59,7 +65,10 @@ insert.place(x=240, y=130)
 root.mainloop()
 
 # 1 Create database connection
-myconn = mysql.connector.connect(host="localhost", user="root", passwd="  ", database="  ")
+myconn = mysql.connector.connect(host="localhost",
+    user=os.environ["MYSQL_USER"],
+    passwd=os.environ["MYSQL_PASSWORD"],
+    database=os.environ["MYSQL_DATABASE"])
 date = datetime.utcnow()
 now = datetime.now()
 current_time = now.strftime("%H:%M:%S")
@@ -68,10 +77,10 @@ cursor = myconn.cursor()
 
 #2 Load recognize and read label from model
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-recognizer.read("/Users/amaris/PycharmProjects/pythonProject/FaceRecognition/train.yml")
+recognizer.read("FaceRecognition/train.yml")
 
 labels = {"person_name": 1}
-with open("/Users/amaris/PycharmProjects/pythonProject/FaceRecognition/labels.pickle", "rb") as f:
+with open("FaceRecognition/labels.pickle", "rb") as f:
     labels = pickle.load(f)
     labels = {v: k for k, v in labels.items()}
 
@@ -81,7 +90,7 @@ rate = engine.getProperty("rate")
 engine.setProperty("rate", 175)
 
 # Define camera and detect face
-face_cascade = cv2.CascadeClassifier('/Users/amaris/PycharmProjects/pythonProject/FaceRecognition/haarcascade/haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('FaceRecognition/haarcascade/haarcascade_frontalface_default.xml')
 cap = cv2.VideoCapture(0)
 
 # 3 Open the camera and start face recognition

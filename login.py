@@ -2,7 +2,10 @@ from tkinter import *
 import tkinter.messagebox as MessageBox
 import mysql.connector as mysql
 import sys
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # when student ID does not exist
 def invalid_id():
@@ -20,10 +23,13 @@ def insert():
     if id == "":
         MessageBox.showinfo("Insert Status", "All fields are required")
     else:
-        conn = mysql.connect(user='root', password='AmarisSQL1', database='facerecognition',
-                                      auth_plugin='mysql_native_password')
+        conn = mysql.connect(
+            user=os.environ["MYSQL_USER"],
+            passwd=os.environ["MYSQL_PASSWORD"],
+            database=os.environ["MYSQL_DATABASE"],
+            auth_plugin='mysql_native_password')
         cursor = conn.cursor()
-        cursor.execute("use facerecognition")
+        cursor.execute(f'use {os.environ["MYSQL_DATABASE"]}')
         cursor.execute("select * from Student where student_id=%s", (id,))
         result = cursor.fetchone()
         if not result:

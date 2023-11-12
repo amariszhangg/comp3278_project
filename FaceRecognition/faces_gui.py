@@ -7,9 +7,16 @@ import pickle
 from datetime import datetime
 import sys
 import PySimpleGUI as sg
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # 1 Create database connection
-myconn = mysql.connector.connect(host="localhost", user="root", passwd="123456", database="facerecognition")
+myconn = mysql.connector.connect(host="localhost",
+    user=os.environ["MYSQL_USER"],
+    passwd=os.environ["MYSQL_PASSWORD"],
+    database=os.environ["MYSQL_DATABASE"])
 date = datetime.utcnow()
 now = datetime.now()
 current_time = now.strftime("%H:%M:%S")
@@ -18,10 +25,10 @@ cursor = myconn.cursor()
 
 #2 Load recognize and read label from model
 recognizer = cv2.face.LBPHFaceRecognizer_create()
-recognizer.read("train.yml")
+recognizer.read("FaceRecognition/train.yml")
 
 labels = {"person_name": 1}
-with open("labels.pickle", "rb") as f:
+with open("FaceRecognition/labels.pickle", "rb") as f:
     labels = pickle.load(f)
     labels = {v: k for k, v in labels.items()}
 
@@ -31,7 +38,7 @@ rate = engine.getProperty("rate")
 engine.setProperty("rate", 175)
 
 # Define camera and detect face
-face_cascade = cv2.CascadeClassifier('haarcascade/haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('FaceRecognition/haarcascade/haarcascade_frontalface_default.xml')
 cap = cv2.VideoCapture(0)
 
 

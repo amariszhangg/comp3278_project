@@ -1,0 +1,7 @@
+.env
+
+**/__pycache__
+
+FaceRecognition/data/**
+FaceRecognition/train.yml
+FaceRecognition/labels.pickle
