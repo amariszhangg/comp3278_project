@@ -44,9 +44,10 @@ Final DDL, 22/11, we need:
 2. main GUI after logging in that shows the class in the next hour OR a personal timetable (maybe a logout button)
 3. table schema, maybe an ER diagram and tables
 4. ppt slides (3 pages, cheat by including layers)
+   https://docs.google.com/presentation/d/1Yf7OuEdqYgQwmQ74nxbXVPyFcyTXsXSYJoHCzis7Tsw/edit?usp=sharing
     4.1 design features (showcase interfaces)
     4.2 database implementation and design
     4.3 final entities and design
     4.4 Problems faced and addressed
-5. video demo
+6. video demo
 
