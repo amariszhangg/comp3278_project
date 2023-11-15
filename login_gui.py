@@ -37,7 +37,7 @@ def insert():
         else:
             window.close()
             sys.path.append("FaceRecognition")
-            import faces_gui
+            import faces
 
 
 class CustomTitleBar(QWidget):
