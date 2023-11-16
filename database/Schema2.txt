@@ -30,3 +30,6 @@ TeacherMessage(course_code, message_id, post_time, message)
     Primary Key: message_id, course_code
     Foreign Key: course_code referencing Course(course_code)
 
+LoginData(student_id, loginTime, logoutTime)
+    Primary Key: student_id, loginTime, logoutTime
+    Foreign Key: student_id referencing Student(student_id)
