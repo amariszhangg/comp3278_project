@@ -57,7 +57,7 @@ login_widget.setPalette(pal)
 id_label = QLabel("Enter ID", login_widget)
 id_label.setFont(QFont("Arial", 14))
 id_label.setAlignment(Qt.AlignCenter)
-id_label.setFixedSize(200,23)
+id_label.setFixedSize(200,30)
 id_label.setStyleSheet(
     """
     QLabel {
@@ -68,8 +68,8 @@ id_label.setStyleSheet(
 )
 # Create the input field
 e_id = QLineEdit(login_widget)
-e_id.setFixedWidth(320)
-e_id.setFixedHeight(38)
+e_id.setFixedWidth(300)
+e_id.setFixedHeight(45)
 e_id.setStyleSheet(
     """
     QLineEdit {
@@ -79,28 +79,7 @@ e_id.setStyleSheet(
     """
 )
 e_id.setAlignment(Qt.AlignCenter)
-
-# Create the login with face button
-loginwithface_button = QPushButton('Login with faceID')
-loginwithface_button.setFont(QFont("Arial", 14))
-loginwithface_button.setStyleSheet(
-    """
-    QPushButton {
-        background-color: rgba(76, 175, 80, 200);
-        color: white;
-        border-radius: 5px;
-        padding: 10px;
-    }
-
-    QPushButton:hover {
-        background-color: rgba(69, 160, 73, 200);
-    }
-    """
-    )
-loginwithface_button.setFixedWidth(130)
-loginwithface_button.setFixedHeight(32)
-login_widget.loginwithface_button = loginwithface_button
-
+login_widget.e_id = e_id
 # Create the login button
 login_button = QPushButton("Login")
 login_button.setFont(QFont("Arial", 14))
@@ -118,34 +97,18 @@ login_button.setStyleSheet(
     }
     """
 )
-login_button.setFixedWidth(130)
-login_button.setFixedHeight(31)
+login_button.setFixedWidth(200)
+login_button.setFixedHeight(40)
 login_widget.login_button = login_button
 
 # Create transparent box
 box_layout = QVBoxLayout()
 transparent_box = QFrame(login_widget)
 transparent_box.setLayout(box_layout)
-
-# Create a QHBoxLayout to contain the buttons and align them in the center horizontally
-buttons_layout = QHBoxLayout()
-buttons_layout.addWidget(login_button)
-buttons_layout.addWidget(loginwithface_button)
-
-# Create a QVBoxLayout to center the buttons vertically
-buttons_wrapper_layout = QVBoxLayout()
-buttons_wrapper_layout.addStretch()  # Add stretchable space at the top
-buttons_wrapper_layout.addLayout(buttons_layout)
-buttons_wrapper_layout.addStretch()  # Add stretchable space at the bottom
-
-buttons_widget = QWidget()
-buttons_widget.setLayout(buttons_wrapper_layout)
-
 box_layout.addWidget(id_label, alignment=Qt.AlignCenter)
 box_layout.addWidget(e_id, alignment=Qt.AlignCenter)
-box_layout.addWidget(buttons_widget, alignment=Qt.AlignCenter)  # Align center vertically
-
-transparent_box.setFixedWidth(450)
-transparent_box.setFixedHeight(160)
+box_layout.addWidget(login_button, alignment=Qt.AlignCenter)
+transparent_box.setFixedWidth(500)
+transparent_box.setFixedHeight(150)
 transparent_box.setStyleSheet("background-color: rgba(0, 0, 0, 150); border-radius: 10px;")
 layout.addWidget(transparent_box)
