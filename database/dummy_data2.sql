@@ -1,27 +1,27 @@
 INSERT INTO
-    Student (name, email, face_id, login_time, logout_time)
+    Student (name, email, face_id)
 VALUES
-    ('Eddie', 'eddie@gmail.com', 1, '2023-10-02 11:32:42', '2023-10-02 17:24:44');
+    ('Eddie', 'eddie@gmail.com', 1);
 
 INSERT INTO
-    Student (name, email, face_id, login_time, logout_time)
+    Student (name, email, face_id)
 VALUES
-    ('Amaris', 'amaris@gmail.com', 2, '2023-10-02 11:32:42', '2023-10-02 17:24:44');
+    ('Amaris', 'amaris@gmail.com', 2);
 
 INSERT INTO
-    Student (name, email, face_id, login_time, logout_time)
+    Student (name, email, face_id)
 VALUES
-    ('Angus', 'angus@gmail.com', 3, '2023-10-02 11:32:42', '2023-10-02 17:24:44');
+    ('Angus', 'angus@gmail.com', 3);
 
 INSERT INTO
-    Student (name, email, face_id, login_time, logout_time)
+    Student (name, email, face_id)
 VALUES
-    ('Jonathan', 'jonathan@gmail.com', 4, '2023-10-02 11:32:42', '2023-10-02 17:24:44');
+    ('Jonathan', 'jonathan@gmail.com', 4);
 
 INSERT INTO
-    Student (name, email, face_id, login_time, logout_time)
+    Student (name, email, face_id)
 VALUES
-    ('Dex', 'dex@gmail.com', 5, '2023-10-02 11:32:42', '2023-10-02 17:24:44');
+    ('Dex', 'dex@gmail.com', 5);
 
 INSERT INTO
     Teacher (name, email)
@@ -128,3 +128,29 @@ VALUES
         'Welcome to COMP3278!',
         '2023-11-06 14:30:00'
     );
+
+
+INSERT INTO
+    LoginData (student_id,loginTime, logoutTime)
+VALUES
+    (1, '2023-10-02 11:32:42', '2023-10-02 17:24:44');
+
+INSERT INTO
+    LoginData (student_id,loginTime, logoutTime)
+VALUES
+    (2, '2023-10-02 11:32:42', '2023-10-02 17:24:44');
+
+INSERT INTO
+    LoginData (student_id,loginTime, logoutTime)
+VALUES
+    (3, '2023-10-02 11:32:42', '2023-10-02 17:24:44');
+
+INSERT INTO
+    LoginData (student_id,loginTime, logoutTime)
+VALUES
+    (4, '2023-10-02 11:32:42', '2023-10-02 17:24:44');
+
+INSERT INTO
+    LoginData (student_id,loginTime, logoutTime)
+VALUES
+    (5, '2023-10-02 11:32:42', '2023-10-02 17:24:44');
