@@ -4,8 +4,6 @@ CREATE TABLE
     name varchar(255) NOT NULL,
     email varchar(255) NOT NULL,
     face_id int NOT NULL UNIQUE,
-    login_time datetime NOT NULL,
-    logout_time datetime NOT NULL,
     PRIMARY KEY (student_id)
   ) ENGINE = INNODB;
 
@@ -77,3 +75,13 @@ CREATE TABLE
     FOREIGN KEY (course_code) REFERENCES Course (course_code),
     PRIMARY KEY (message_id, course_code)
   ) ENGINE = INNODB;
+
+
+CREATE TABLE 
+  IF NOT EXISTS LoginData (
+  student_id int NOT NULL,
+  loginTime datetime NOT NULL,
+  logoutTime datetime NOT NULL,
+  FOREIGN KEY (student_id) REFERENCES Student(student_id),
+  PRIMARY KEY (student_id, loginTime, logoutTime)
+) ENGINE = INNODB;
