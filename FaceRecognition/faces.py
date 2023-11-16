@@ -53,8 +53,8 @@ while True:
         # predict the id and confidence for faces
         id_, conf = recognizer.predict(roi_gray)
 
-        # If the face is recognized
-        if conf >= 60:
+        # IF THE FACE IS RECOGNIZED 
+        if conf >= 20:
             # print(id_)
             # print(labels[id_])
             font = cv2.QT_FONT_NORMAL
@@ -62,26 +62,37 @@ while True:
             id += 1
             name = labels[id_]
             current_name = name
+
+
+            #
+            query = "SELECT student_id FROM student WHERE name = %s"
+            cursor.execute(query, (name,))
+            student_id = cursor.fetchone()[0] #without [0], will give sth like (4,) ;  with [0], give 4
+            #print(name)
+            #print(student_id)
+
+
             color = (255, 0, 0)
             stroke = 2
             cv2.putText(frame, name, (x, y), font, 1, color, stroke, cv2.LINE_AA)
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), (2))
 
-            # Find the student's information in the database.
-            select = "SELECT student_id, name, DAY(login_date), MONTH(login_date), YEAR(login_date) FROM Student WHERE name='%s'" % (name)
+            # FIND THE STUDENT'S INFO IN THE DATABASE facerecognition
+            select = "SELECT student_id, name, email, face_id FROM student WHERE name='%s'" % (name)
             name = cursor.execute(select)
             result = cursor.fetchall()
             # print(result)
+            
             data = "error"
 
             for x in result:
                 data = x
 
-            # If the student's information is not found in the database
+            # IF STUDENT'S INFO NOT FOUND IN DATABASE 
             if data == "error":
                 print("The student", current_name, "is NOT FOUND in the database.")
 
-            # If the student's information is found in the database
+            # IF STUDENT'S INFO FOUND IN DATABASE
             else:
                 """
                 Implement useful functions here.
@@ -92,13 +103,10 @@ while True:
                         timetable for the student.
 
                 """
-                # Update the data in database
-                update =  "UPDATE Student SET login_date=%s WHERE name=%s"
-                val = (date, current_name)
-                cursor.execute(update, val)
-                update = "UPDATE Student SET login_time=%s WHERE name=%s"
-                val = (current_time, current_name)
-                cursor.execute(update, val)
+                # UPDATE DATA (LoginTime) IN DATABASE 
+                update =  "UPDATE loginData SET loginTime= %s WHERE student_id= %s"
+                val = (date, student_id)
+                cursor.execute(update,val)
                 myconn.commit()
                
                 hello = ("Hello ", current_name, "You did attendance today")
@@ -107,8 +115,9 @@ while True:
                 # engine.runAndWait()
 
 
-        # If the face is unrecognized
+        # IF FACE IS NOT RECOGNIZED
         else: 
+            print(conf)
             color = (255, 0, 0)
             stroke = 2
             font = cv2.QT_FONT_NORMAL
