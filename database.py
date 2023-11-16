@@ -60,6 +60,24 @@ def getTeacherLatestMessage(course_code):
         return None
     return latest_message[0]
 
-def updateLogoutTime(student_id):
+def LoginTime(student_id):
     cursor = conn.cursor()
-    # TODO
+    cursor.execute(f"SELECT loginTime FROM LoginData WHERE student_id='{student_id}'")
+    login_time = cursor.fetchone()
+    if login_time:
+        return login_time[0]
+    return None
+
+def LogoutTime(student_id):
+    cursor = conn.cursor()
+    query = f"SELECT logoutTime FROM LoginData WHERE student_id='{student_id}"
+    cursor.execute(query)
+    conn.commit()
+
+def StayTime(student_id):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT TIMEDIFF(logoutTime, loginTime) as duration FROM LoginData WHERE student_id='{student_id}'")
+    duration = cursor.fetchone()
+    if duration:
+        return duration[0]
+    return None
