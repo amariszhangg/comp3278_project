@@ -50,6 +50,22 @@ def logout():
     # TODO Write logic to update logout time
     main_stack.setCurrentIndex(0)
 
+    # code added by Amaris but not tested
+    date = datetime.utcnow()
+    student_id = login_widget.e_id.text()
+    print(student_id)
+    conn = mysql.connector.connect(host="localhost",
+            user=os.environ["MYSQL_USER"],
+            passwd=os.environ["MYSQL_PASSWORD"],
+            database=os.environ["MYSQL_DATABASE"])
+    cursor = conn.cursor()
+
+    update = "UPDATE loginData SET logoutTime= %s WHERE student_id= %s"
+    val = (date, student_id)
+    cursor.execute(update, val)
+    conn.commit()
+
+
 login_widget.login_button.clicked.connect(login)
 main_widget.logout_button.clicked.connect(logout)
 
