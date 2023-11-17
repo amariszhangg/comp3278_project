@@ -52,6 +52,46 @@ def getMaterials(group_id):
     course_materials = cursor.fetchall()
     return course_materials
 
+#to be checked
+def getMaterialsForGroup(course_code, group_id):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT material_link, material_name FROM CourseMaterial WHERE course_code = '{course_code}' AND group_id = '{group_id}'")
+    materials = cursor.fetchall()
+    materials_list = [(material[0], material[1]) for material in materials]
+    return materials_list
+
+#to be checked
+def getMaterialGroupsForCourse(course_code):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT group_id, group_name FROM CourseMaterialSection WHERE course_code = '{course_code}'")
+    groups = cursor.fetchall()
+    groups_list = [(group[0], group[1]) for group in groups]
+    return groups_list
+
+#to be checked
+def getTeachersForCourse(course_code):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT Teacher.name, Teacher.email FROM Teacher JOIN Course ON Teacher.teacher_id = Course.teacher_id WHERE Course.course_code = '{course_code}'")
+    teachers_info = cursor.fetchall()
+    teachers_data = [(name, email) for name, email in teachers_info]
+    return teachers_data
+
+#to be checked
+def getClassroomsForCourse(course_code):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT classroom FROM Schedule WHERE course_code = '{course_code}'")
+    classrooms = cursor.fetchall()
+    classrooms_list = [classroom[0] for classroom in classrooms]
+    return classrooms_list
+
+#to be checked
+def getTeacherMessages(course_code):
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT message, post_time FROM TeacherMessage WHERE course_code = '{course_code}' ORDER BY post_time DESC")
+    messages = cursor.fetchall()
+    messages_list = [(message[0], message[1]) for message in messages]
+    return messages_list
+
 def getTeacherLatestMessage(course_code):
     cursor = conn.cursor()
     cursor.execute(f"SELECT * FROM TeacherMessage WHERE course_code='{course_code}' ORDER BY post_time DESC LIMIT 1")
