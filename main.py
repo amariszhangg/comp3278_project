@@ -16,6 +16,7 @@ from datetime import datetime
 import sys
 import os
 from dotenv import load_dotenv
+import FaceRecognition.faces # for using the function studentID to get the student_id of the face being detected
 
 app = QApplication(sys.argv)
 main_window = QMainWindow()
@@ -30,6 +31,14 @@ main_stack.addWidget(main_widget)
 
 load_dotenv()
 
+myconn = mysql.connector.connect(host="localhost",
+user=os.environ["MYSQL_USER"],
+passwd=os.environ["MYSQL_PASSWORD"],
+database=os.environ["MYSQL_DATABASE"])
+cursor = myconn.cursor()
+
+
+si = 0
 
 def login():
     user_input = login_widget.e_id.text()
@@ -39,36 +48,36 @@ def login():
         user = database.getStudent(user_input)
         if user is not None:
             logedin_user = user
-            with open("FaceRecognition/faces.py", 'r') as file:
-                code = file.read()
-                exec(code)
-            main_stack.setCurrentIndex(1)
+            global si
+            si = FaceRecognition.faces.face_recognition()
+            if si == int(user_input):
+                date = datetime.utcnow()
+                # UPDATE DATA (LoginTime) IN DATABASE 
+                update =  "UPDATE loginData SET loginTime= %s WHERE student_id= %s"
+                val = (date, user_input)
+                cursor.execute(update,val)
+                myconn.commit()
+                main_stack.setCurrentIndex(1)
+            else:
+                QMessageBox.critical(login_widget, "Error!", "Face doesn't match the inputted student_id!!!!!!")
         else:
             QMessageBox.critical(login_widget, "Oops", "User not found in database.")
 
-def logout():
-    # TODO Write logic to update logout time
+
+
+#pass in the student_id and update the logout time of the students
+def logout(student_id):
     main_stack.setCurrentIndex(0)
-
-    # code added by Amaris but not tested
     date = datetime.utcnow()
-    student_id = login_widget.e_id.text()
-    print(student_id)
-    conn = mysql.connector.connect(host="localhost",
-            user=os.environ["MYSQL_USER"],
-            passwd=os.environ["MYSQL_PASSWORD"],
-            database=os.environ["MYSQL_DATABASE"])
-    cursor = conn.cursor()
-
-    update = "UPDATE loginData SET logoutTime= %s WHERE student_id= %s"
+    update = "UPDATE LoginData SET logoutTime = %s WHERE student_id = %s "
     val = (date, student_id)
-    cursor.execute(update, val)
-    conn.commit()
+    cursor.execute(update,val)
+    myconn.commit()
+
 
 
 login_widget.login_button.clicked.connect(login)
-main_widget.logout_button.clicked.connect(logout)
-
+main_widget.logout_button.clicked.connect(lambda: logout(si))
 main_window.setCentralWidget(main_stack)
 
 main_window.resize(850, 534)
@@ -76,5 +85,4 @@ main_window.setMaximumSize(850, 534)
 main_window.setMinimumSize(850, 534)
 
 main_window.show()
-
 sys.exit(app.exec_())
