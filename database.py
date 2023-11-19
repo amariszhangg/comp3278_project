@@ -4,6 +4,7 @@
 import mysql.connector
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 
 load_dotenv()
 
@@ -121,3 +122,15 @@ def StayTime(student_id):
     if duration:
         return duration[0]
     return None
+
+def getUpcomingClass(student_id):
+    today = datetime.now().date()  # today's date
+    time = datetime.now().time()  
+    cursor = conn.cursor()# current time
+    cursor.execute(
+        f"SELECT * FROM (SELECT * FROM Schedule WHERE DATE(start_time)='{today}' AND '{time}' <= TIME(start_time)) as S NATURAL JOIN (SELECT course_code FROM Enrolled WHERE student_id='{student_id}') AS E ORDER BY start_time LIMIT 1")
+    earliest = cursor.fetchone()  # fetch next earliest class
+    if earliest:
+        return earliest
+    else:
+        return None

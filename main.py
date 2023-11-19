@@ -17,6 +17,8 @@ import sys
 import os
 from dotenv import load_dotenv
 import FaceRecognition.faces # for using the function studentID to get the student_id of the face being detected
+# global student_id
+import data
 
 app = QApplication(sys.argv)
 main_window = QMainWindow()
@@ -37,9 +39,6 @@ passwd=os.environ["MYSQL_PASSWORD"],
 database=os.environ["MYSQL_DATABASE"])
 cursor = myconn.cursor()
 
-
-si = 0
-
 def login():
     user_input = login_widget.e_id.text()
     if user_input == "":
@@ -47,41 +46,38 @@ def login():
     else:
         user = database.getStudent(user_input)
         if user is not None:
-            logedin_user = user
-            global si
-            si = FaceRecognition.faces.face_recognition()
-            if si == int(user_input):
+            student_id = FaceRecognition.faces.face_recognition()
+            if student_id == int(user_input):
+                data.student_id = student_id
+                from home import update_home_content
+                from schedule import update_schedule_content
+                update_home_content()
+                update_schedule_content()
                 date = datetime.utcnow()
                 # UPDATE DATA (LoginTime) IN DATABASE 
                 update =  "UPDATE loginData SET loginTime= %s WHERE student_id= %s"
                 val = (date, user_input)
                 cursor.execute(update,val)
                 myconn.commit()
-                
-                with open("main_gui.py", 'r') as file:
-                    code = file.read()
-                    exec(code)
+
                 main_stack.setCurrentIndex(1)
             else:
                 QMessageBox.critical(login_widget, "Error!", "Face doesn't match the inputted student_id!!!!!!")
         else:
             QMessageBox.critical(login_widget, "Oops", "User not found in database.")
 
-
-
 #pass in the student_id and update the logout time of the students
-def logout(student_id):
+def logout():
     main_stack.setCurrentIndex(0)
     date = datetime.utcnow()
     update = "UPDATE LoginData SET logoutTime = %s WHERE student_id = %s "
-    val = (date, student_id)
+    val = (date, data.student_id)
     cursor.execute(update,val)
     myconn.commit()
-
-
+    data.student_id = 0
 
 login_widget.login_button.clicked.connect(login)
-main_widget.logout_button.clicked.connect(lambda: logout(si))
+main_widget.logout_button.clicked.connect(logout)
 main_window.setCentralWidget(main_stack)
 
 main_window.resize(850, 534)

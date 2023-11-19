@@ -7,6 +7,8 @@ from PyQt5.QtCore import Qt, QSize
 
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
+from home import home_widget
+from schedule import schedule_widget
 
 main_widget = QWidget()
 
@@ -39,10 +41,10 @@ home_button.setIcon(QIcon('assets/home.png'))
 home_button.setIconSize(QSize(35, 35))
 home_button.setStyleSheet(button_stylesheet)
 
-timetable_button = QToolButton()
-timetable_button.setIcon(QIcon('assets/calendar.png'))
-timetable_button.setIconSize(QSize(35, 35))
-timetable_button.setStyleSheet(button_stylesheet)
+schedule_button = QToolButton()
+schedule_button.setIcon(QIcon('assets/calendar.png'))
+schedule_button.setIconSize(QSize(35, 35))
+schedule_button.setStyleSheet(button_stylesheet)
 
 course_button = QToolButton()
 course_button.setIcon(QIcon('assets/course.png'))
@@ -56,28 +58,28 @@ logout_button.setStyleSheet(button_stylesheet)
 main_widget.logout_button = logout_button
 
 nav_layout.addWidget(home_button)
-nav_layout.addWidget(timetable_button)
+nav_layout.addWidget(schedule_button)
 nav_layout.addWidget(course_button)
 nav_layout.addWidget(logout_button)
 
 stack = QStackedWidget()
 
-from home import home_widget
-from schedule import schedule_widget
-from course import course_widget
+# from course import course_widget
 
 stack.addWidget(home_widget)
 stack.addWidget(schedule_widget)
-stack.addWidget(course_widget)
+# stack.addWidget(course_widget)
 
 # default as home
 stack.setCurrentIndex(0)
 
 def switch_tab_generator(i):
-    return lambda : stack.setCurrentIndex(i)
+    def switch_tab():
+        stack.setCurrentIndex(i)
+    return switch_tab
 
 home_button.clicked.connect(switch_tab_generator(0))
-timetable_button.clicked.connect(switch_tab_generator(1))
+schedule_button.clicked.connect(switch_tab_generator(1))
 course_button.clicked.connect(switch_tab_generator(2))
 
 main_layout = QVBoxLayout()

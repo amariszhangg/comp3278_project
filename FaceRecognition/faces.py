@@ -27,7 +27,7 @@ recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read("FaceRecognition/train.yml")
 
 labels = {"person_name": 1}
-with open("labels.pickle", "rb") as f:
+with open("FaceRecognition/labels.pickle", "rb") as f:
     labels = pickle.load(f)
     labels = {v: k for k, v in labels.items()}
 

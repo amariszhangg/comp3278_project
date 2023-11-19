@@ -7,40 +7,35 @@ from PyQt5.QtCore import Qt, QSize
 
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
-from dotenv import load_dotenv
-load_dotenv()
+import database
+from datetime import datetime
+import data
 
 home_widget = QWidget()
 
 home_layout = QVBoxLayout()
 home_layout.setAlignment(Qt.AlignCenter)
 
-home_layout.addWidget(QLabel("This is home page"))
-
 home_widget.setLayout(home_layout)
 
+label = QLabel("abc")
 
+home_layout.addWidget(label)
 
-# 1 Create database connection
-myconn = mysql.connector.connect(host="localhost",
-    user=os.environ["MYSQL_USER"],
-    passwd=os.environ["MYSQL_PASSWORD"],
-    database=os.environ["MYSQL_DATABASE"])
-cursor = myconn.cursor()
-
-student_id = 2  # change to imported student id
+# change to imported student id
 def check_class():
-    today = datetime.now().date()  # today's date
-    time = datetime.now().time()  # current time
-    cursor.execute(
-        f"SELECT * FROM (SELECT * FROM Schedule WHERE DATE(start_time)='{today}' AND '{time}' <= TIME(start_time)) as S NATURAL JOIN (SELECT course_code FROM Enrolled WHERE student_id='{student_id}') AS E ORDER BY start_time LIMIT 1")
-    earliest = cursor.fetchone()  # fetch next earliest class
-    if earliest:
-        time_diff = earliest[1] - datetime.now()
-        if time_diff.total_seconds()//60 <= 60:
-            print(f"You have class in the next hour at {earliest[1].time()}")
-            return True
-    print("No class in the next hour")
-    return False
+    lecture = database.getUpcomingClass(data.student_id)
 
-check_class()  # test the code
+    print(data.student_id)
+
+    if (lecture != None):
+        course_code = lecture[0]
+        start_time = lecture[1]
+        time_diff = start_time - datetime.now()
+        if time_diff.total_seconds() // 60 <= 60:
+            return f"You have {course_code} in the next hour at {start_time.time()}"
+    
+    return "No class in the next hour."
+
+def update_home_content():
+    label.setText(check_class())

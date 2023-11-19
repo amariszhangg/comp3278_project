@@ -4,11 +4,10 @@ from PyQt5.QtWidgets import QToolButton
 from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout
 from PyQt5.QtWidgets import QPushButton, QScrollArea, QSizePolicy
 from PyQt5.QtGui import QIcon, QFont, QDesktopServices, QCursor
-
 from PyQt5.QtCore import Qt, QVariantAnimation, QEasingCurve, QUrl, QSize
 
 import database
-import main
+import data
 
 import datetime
 from dataclasses import dataclass
@@ -28,7 +27,7 @@ scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
 scroll_area.setWidget(scroll_content)
 
-course_widget.addWidget(scroll_area)
+course_layout.addWidget(scroll_area)
 
 @dataclass
 class Course:
@@ -48,7 +47,7 @@ class Material:
 
 courses: list[Course] = [
     database.getCourse(course_code)
-    for course_code in database.getEnrolled(main.user_id)
+    for course_code in database.getEnrolled(data.student_id)
     if course_code is not None
     ]
 
