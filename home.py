@@ -7,6 +7,8 @@ from PyQt5.QtCore import Qt, QSize
 
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import Qt
+from dotenv import load_dotenv
+load_dotenv()
 
 home_widget = QWidget()
 
@@ -17,6 +19,13 @@ home_layout.addWidget(QLabel("This is home page"))
 
 home_widget.setLayout(home_layout)
 
+
+
+# 1 Create database connection
+myconn = mysql.connector.connect(host="localhost",
+    user=os.environ["MYSQL_USER"],
+    passwd=os.environ["MYSQL_PASSWORD"],
+    database=os.environ["MYSQL_DATABASE"])
 
 student_id = 2  # change to imported student id
 def check_class():
