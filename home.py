@@ -35,10 +35,12 @@ def check_class():
     cursor.execute(
         f"SELECT * FROM (SELECT * FROM Schedule WHERE DATE(start_time)='{today}' AND '{time}' <= TIME(start_time)) as S NATURAL JOIN (SELECT course_code FROM Enrolled WHERE student_id='{student_id}') AS E ORDER BY start_time LIMIT 1")
     earliest = cursor.fetchone()  # fetch next earliest class
-    if earliest:  # if there is a class
-        time_diff = earliest[1] - datetime.now()  # get their time difference
-        if time_diff.total_seconds()//60 <= 60:  # if it is within an hour
-            print("You have class in the next hour")
+    if earliest:
+        time_diff = earliest[1] - datetime.now()
+        if time_diff.total_seconds()//60 <= 60:
+            print(f"You have class in the next hour at {earliest[1].time()}")
             return True
     print("No class in the next hour")
     return False
+
+check_class()  # test the code
