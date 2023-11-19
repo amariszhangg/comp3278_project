@@ -57,6 +57,10 @@ def login():
                 val = (date, user_input)
                 cursor.execute(update,val)
                 myconn.commit()
+                
+                with open("main_gui.py", 'r') as file:
+                    code = file.read()
+                    exec(code)
                 main_stack.setCurrentIndex(1)
             else:
                 QMessageBox.critical(login_widget, "Error!", "Face doesn't match the inputted student_id!!!!!!")
