@@ -26,6 +26,7 @@ myconn = mysql.connector.connect(host="localhost",
     user=os.environ["MYSQL_USER"],
     passwd=os.environ["MYSQL_PASSWORD"],
     database=os.environ["MYSQL_DATABASE"])
+cursor = myconn.cursor()
 
 student_id = 2  # change to imported student id
 def check_class():
