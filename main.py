@@ -53,7 +53,7 @@ def login():
                 from schedule import update_schedule_content
                 update_home_content()
                 update_schedule_content()
-                date = datetime.utcnow()
+                date = datetime.now()
                 # UPDATE DATA (LoginTime) IN DATABASE 
                 update =  "UPDATE loginData SET loginTime= %s WHERE student_id= %s"
                 val = (date, user_input)
@@ -69,7 +69,7 @@ def login():
 #pass in the student_id and update the logout time of the students
 def logout():
     main_stack.setCurrentIndex(0)
-    date = datetime.utcnow()
+    date = datetime.now()
     update = "UPDATE LoginData SET logoutTime = %s WHERE student_id = %s "
     val = (date, data.student_id)
     cursor.execute(update,val)
