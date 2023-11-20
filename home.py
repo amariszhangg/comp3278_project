@@ -21,7 +21,15 @@ home_widget.setLayout(home_layout)
 label = QLabel("abc")
 home_layout.addWidget(label)
 
-# change to imported student id
+welcome = QLabel()
+home_layout.addWidget(welcome)
+welcome.setAlignment(Qt.AlignCenter)
+welcome.setFont(QFont('Arial', 70))
+
+login = QLabel()
+home_layout.addWidget(login)
+
+
 def check_class():
     lecture = database.getUpcomingClass(data.student_id)
 
@@ -41,13 +49,7 @@ def update_home_content():
     label.setText(check_class())
     
     student_name = database.getStudent(data.student_id)[1]
-    welcome = QLabel()
     welcome.setText(f"Hello {student_name}")
-    home_layout.addWidget(welcome)
-    welcome.setAlignment(Qt.AlignCenter)
-    welcome.setFont(QFont('Arial', 70))
 
     last_login = database.LoginTime(data.student_id)
-    login = QLabel()
     login.setText(f"Last login: {last_login}")
-    home_layout.addWidget(login)
