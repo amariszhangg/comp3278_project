@@ -1,4 +1,4 @@
-Student(student_id, name, email, login_time, logout_time)
+Student(student_id, name, email)
     Primary Key: student_id
     Foreign Key: None
 
