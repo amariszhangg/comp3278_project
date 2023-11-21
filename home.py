@@ -1,14 +1,8 @@
-from PyQt5.QtWidgets import QApplication, QFrame, QWidget, QMainWindow, QLabel
-from PyQt5.QtWidgets import QStackedWidget, QTextEdit 
-from PyQt5.QtWidgets import QWidget, QStackedWidget
-from PyQt5.QtWidgets import QToolButton
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout
-from PyQt5.QtCore import Qt, QSize
-
-from PyQt5.QtGui import QIcon, QFont
+from PyQt5.QtWidgets import QLabel, QWidget, QVBoxLayout
+from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt
-import database
 from datetime import datetime
+import database
 import data
 
 home_widget = QWidget()
@@ -33,13 +27,10 @@ stay = QLabel()
 home_layout.addWidget(stay)
 
 
-
-def check_class():
+# check if you have class
+def check_class():  
     lecture = database.getUpcomingClass(data.student_id)
-
-    print(data.student_id)
-
-    if (lecture != None):
+    if lecture:
         course_code = lecture[0]
         start_time = lecture[1]
         time_diff = start_time - datetime.now()
@@ -50,8 +41,9 @@ def check_class():
     return "No class in the next hour."
 
 
+# update homepage
 def update_home_content():
-    label.setText(check_class())
+    label.setText(check_class())  
     #show name 
     student_name = database.getStudent(data.student_id)[1]
     welcome.setText(f"Hello {student_name}")
