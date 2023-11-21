@@ -1,11 +1,5 @@
-from PyQt5.QtWidgets import QApplication, QFrame, QWidget, QMainWindow, QMessageBox, QLabel
-from PyQt5.QtWidgets import QStackedWidget, QTableWidget
-from PyQt5.QtWidgets import QWidget, QStackedWidget
-from PyQt5.QtWidgets import QToolButton
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QTableWidgetItem
-from PyQt5.QtCore import Qt, QSize
-
-from PyQt5.QtGui import QIcon, QColor
+from PyQt5.QtWidgets import QTableWidget, QWidget, QVBoxLayout, QTableWidgetItem
+from PyQt5.QtGui import QColor
 from PyQt5.QtCore import Qt
 import math
 import database
