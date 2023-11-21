@@ -1,6 +1,3 @@
-# this runs after face recog, but will probably be merged onto faces.py/faces_gui.py
-# enter your own passwd and database
-# this current code is for selecting all the relevant info to be used in displaying the timetable/class within next hour
 import mysql.connector
 import os
 from dotenv import load_dotenv
