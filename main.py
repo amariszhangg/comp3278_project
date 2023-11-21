@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import FaceRecognition.faces  # for using the function studentID to get the student_id of the face being detected
 import database
 import data  # global student_id
+import os
 
 app = QApplication(sys.argv)
 main_window = QMainWindow()
