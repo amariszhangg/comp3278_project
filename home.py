@@ -29,6 +29,10 @@ welcome.setFont(QFont('Arial', 70))
 login = QLabel()
 home_layout.addWidget(login)
 
+stay = QLabel()
+home_layout.addWidget(stay)
+
+
 
 def check_class():
     lecture = database.getUpcomingClass(data.student_id)
@@ -45,11 +49,15 @@ def check_class():
     
     return "No class in the next hour."
 
+
 def update_home_content():
     label.setText(check_class())
-    
+    #show name 
     student_name = database.getStudent(data.student_id)[1]
     welcome.setText(f"Hello {student_name}")
-
+    #show last login time
     last_login = database.LoginTime(data.student_id)
     login.setText(f"Last login: {last_login}")
+    #show how long does the user stay
+    staytime = database.StayTime(data.student_id)
+    stay.setText(f"Stay Time: {staytime}")
