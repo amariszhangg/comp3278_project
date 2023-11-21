@@ -1,24 +1,11 @@
-import sys
-import database
-from PyQt5.QtWidgets import QApplication, QFrame, QWidget, QMainWindow, QMessageBox
-from PyQt5.QtWidgets import QStackedWidget, QHBoxLayout, QLabel
-from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
-import tkinter.messagebox as MessageBox
-from tkinter import *
-import urllib
-import numpy as np
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QStackedWidget
 import mysql.connector
-import cv2
-import pyttsx3
-import pickle
 from datetime import datetime
 import sys
-import os
 from dotenv import load_dotenv
-import FaceRecognition.faces # for using the function studentID to get the student_id of the face being detected
-# global student_id
-import data
+import FaceRecognition.faces  # for using the function studentID to get the student_id of the face being detected
+import database
+import data  # global student_id
 
 app = QApplication(sys.argv)
 main_window = QMainWindow()
@@ -66,7 +53,8 @@ def login():
         else:
             QMessageBox.critical(login_widget, "Oops", "User not found in database.")
 
-#pass in the student_id and update the logout time of the students
+
+#pass in the student_id and update the student's logout time 
 def logout():
     main_stack.setCurrentIndex(0)
     date = datetime.now()
