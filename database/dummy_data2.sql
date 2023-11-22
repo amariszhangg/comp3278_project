@@ -1,27 +1,27 @@
 INSERT INTO
     Student (name, email, face_id)
 VALUES
-    ('Eddie', 'eddie@gmail.com', 1);
+    ('Eddie', 'eddie@connect.hku.hk', 1);
 
 INSERT INTO
     Student (name, email, face_id)
 VALUES
-    ('Amaris', 'amaris@gmail.com', 2);
+    ('Amaris', 'amaris@connect.hku.hk', 2);
 
 INSERT INTO
     Student (name, email, face_id)
 VALUES
-    ('Angus', 'angus@gmail.com', 3);
+    ('Angus', 'angus@connect.hku.hk', 3);
 
 INSERT INTO
     Student (name, email, face_id)
 VALUES
-    ('Jonathan', 'jonathan@gmail.com', 4);
+    ('Jonathan', 'jonathan@connect.hku.hk', 4);
 
 INSERT INTO
     Student (name, email, face_id)
 VALUES
-    ('Dex', 'dex@gmail.com', 5);
+    ('Dex', 'dex@connect.hku.hk', 5);
 
 INSERT INTO
     Teacher (name, email)
