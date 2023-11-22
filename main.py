@@ -74,5 +74,10 @@ main_window.setCentralWidget(main_stack)
 
 main_window.resize(850, 534)
 
+pixmap = QPixmap('assets/login_background.jpg')
+pal = QPalette()
+pal.setBrush(QPalette.Background, QBrush(pixmap))
+main_window.setPalette(pal)
+
 main_window.show()
 sys.exit(app.exec_())
