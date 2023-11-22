@@ -132,7 +132,7 @@ def create_course_widget(course):
 
     text = get_email_main_content()
     mail_to_link = QUrl(
-        f"mailto:{database.getStudent(3)[2]}" +
+        f"mailto:{database.getStudent(data.student_id)[2]}" +
         f"?subject={QUrl.toPercentEncoding(f'Course {course.course_code} Detail: {course.course_name}').data().decode()}"  +
         f"&body={QUrl.toPercentEncoding(text).data().decode()}",
         QUrl.ParsingMode.TolerantMode
