@@ -13,7 +13,7 @@ main_window = QMainWindow()
 main_window.setWindowTitle("Intelligent Course Management System")
 
 from login_gui import login_widget
-from main_gui import main_widget
+from main_gui import main_widget, stack
 
 main_stack = QStackedWidget()
 main_stack.addWidget(login_widget)
@@ -39,8 +39,10 @@ def login():
                 data.student_id = student_id
                 from home import update_home_content
                 from schedule import update_schedule_content
+                from course import update_course_content
                 update_home_content()
                 update_schedule_content()
+                update_course_content()
                 date = datetime.now()
                 # UPDATE DATA (LoginTime) IN DATABASE 
                 update =  "UPDATE loginData SET loginTime= %s WHERE student_id= %s"
@@ -48,6 +50,7 @@ def login():
                 cursor.execute(update,val)
                 myconn.commit()
 
+                stack.setCurrentIndex(0)
                 main_stack.setCurrentIndex(1)
             else:
                 QMessageBox.critical(login_widget, "Error!", "Face doesn't match the inputted student_id!!!!!!")
@@ -70,8 +73,6 @@ main_widget.logout_button.clicked.connect(logout)
 main_window.setCentralWidget(main_stack)
 
 main_window.resize(850, 534)
-main_window.setMaximumSize(850, 534)
-main_window.setMinimumSize(850, 534)
 
 main_window.show()
 sys.exit(app.exec_())
