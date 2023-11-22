@@ -3,6 +3,7 @@ from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
 from home import home_widget
 from schedule import schedule_widget
+from course import course_widget
 
 main_widget = QWidget()
 
@@ -58,11 +59,9 @@ nav_layout.addWidget(logout_button)
 
 stack = QStackedWidget()
 
-# from course import course_widget
-
 stack.addWidget(home_widget)
 stack.addWidget(schedule_widget)
-# stack.addWidget(course_widget)
+stack.addWidget(course_widget)
 
 # default as home
 stack.setCurrentIndex(0)
