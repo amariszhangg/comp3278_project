@@ -1,6 +1,4 @@
-# comp3278_project
-
-intelligent course management system
+Intelligent course management system
 
 ## Installation
 
@@ -36,25 +34,14 @@ python train.py
 python main.py
 ```
 
-## TODO
+## INDEX
 
-Internal DDL, 15/11:
+1. main.py: login page
+2. FaceRecognition/faces.py: face recognition
+3. home.py: homepage
+4. schedule.py: student's weekly schedule
+5. course.py: shows student's courses and course materials, also lets them send course details to their email
+6. database.py: finds details from sql database
+7. data.py: global student id
 
-1. improved UI for login (Dex)
-2. merged login and GUI (Jonathan)
-3. functions to call data (Angus)
-
-Final DDL, 22/11, we need:
-
-1. login page
-2. course page
-3. home page
-4. schedule page
-5. table schema, maybe an ER diagram and tables
-6. ppt slides (3 pages, cheat by including layers)
-   https://docs.google.com/presentation/d/1Yf7OuEdqYgQwmQ74nxbXVPyFcyTXsXSYJoHCzis7Tsw/edit?usp=sharing
-   4.1 design features (showcase interfaces)
-   4.2 database implementation and design
-   4.3 final entities and design
-   4.4 Problems faced and addressed
-7. video demo
+PPT slides: https://docs.google.com/presentation/d/1Yf7OuEdqYgQwmQ74nxbXVPyFcyTXsXSYJoHCzis7Tsw/edit?usp=sharing
