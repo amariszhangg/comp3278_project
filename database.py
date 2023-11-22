@@ -1,3 +1,6 @@
+# this runs after face recog, but will probably be merged onto faces.py/faces_gui.py
+# enter your own passwd and database
+# this current code is for selecting all the relevant info to be used in displaying the timetable/class within next hour
 import mysql.connector
 import os
 from dotenv import load_dotenv
@@ -50,15 +53,13 @@ def getMaterials(group_id):
     course_materials = cursor.fetchall()
     return course_materials
 
-#to be checked
 def getMaterialsForGroup(course_code, group_id):
     cursor = conn.cursor()
-    cursor.execute(f"SELECT material_link, material_name FROM CourseMaterial WHERE course_code = '{course_code}' AND group_id = '{group_id}'")
+    cursor.execute(f"SELECT link, material_name FROM Material WHERE course_code = '{course_code}' AND group_id = '{group_id}'")
     materials = cursor.fetchall()
     materials_list = [(material[0], material[1]) for material in materials]
     return materials_list
 
-#to be checked
 def getMaterialGroupsForCourse(course_code):
     cursor = conn.cursor()
     cursor.execute(f"SELECT group_id, group_name FROM CourseMaterialSection WHERE course_code = '{course_code}'")
@@ -66,7 +67,6 @@ def getMaterialGroupsForCourse(course_code):
     groups_list = [(group[0], group[1]) for group in groups]
     return groups_list
 
-#to be checked
 def getTeachersForCourse(course_code):
     cursor = conn.cursor()
     cursor.execute(f"SELECT Teacher.name, Teacher.email FROM Teacher JOIN Course ON Teacher.teacher_id = Course.teacher_id WHERE Course.course_code = '{course_code}'")
@@ -74,7 +74,6 @@ def getTeachersForCourse(course_code):
     teachers_data = [(name, email) for name, email in teachers_info]
     return teachers_data
 
-#to be checked
 def getClassroomsForCourse(course_code):
     cursor = conn.cursor()
     cursor.execute(f"SELECT classroom FROM Schedule WHERE course_code = '{course_code}'")
@@ -82,7 +81,6 @@ def getClassroomsForCourse(course_code):
     classrooms_list = [classroom[0] for classroom in classrooms]
     return classrooms_list
 
-#to be checked
 def getTeacherMessages(course_code):
     cursor = conn.cursor()
     cursor.execute(f"SELECT message, post_time FROM TeacherMessage WHERE course_code = '{course_code}' ORDER BY post_time DESC")
