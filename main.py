@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QStackedWidget
+from PyQt5.QtGui import QPixmap, QPalette, QBrush
 import mysql.connector
 from datetime import datetime
 import sys
@@ -6,7 +7,7 @@ from dotenv import load_dotenv
 import FaceRecognition.faces  # for using the function studentID to get the student_id of the face being detected
 import database
 import data  # global student_id
-import os
+
 
 app = QApplication(sys.argv)
 main_window = QMainWindow()
@@ -45,7 +46,7 @@ def login():
                 update_course_content()
                 date = datetime.now()
                 # UPDATE DATA (LoginTime) IN DATABASE 
-                update =  "UPDATE loginData SET loginTime= %s WHERE student_id= %s"
+                update = "UPDATE loginData SET loginTime= %s WHERE student_id= %s"
                 val = (date, user_input)
                 cursor.execute(update,val)
                 myconn.commit()
